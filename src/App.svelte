@@ -1,30 +1,93 @@
 <script>
-	export let name;
+  import Form from './AddTask.svelte';
+  import Task from './Task.svelte';
+  import Button from './Button.svelte';
+  import TaskDone from './TaskDone.svelte';
+
+  let showModal = false;
+
+  const showHide = () => {
+    showModal = !showModal;
+  };
+
+  let tasks = [
+    {
+      task: 'testaile',
+      details: 'testaillaan UI:ta svelte sovelluksessa',
+      deadline: 'Nov 26',
+    },
+  ];
+  let tasksDone = [];
+
+  const addTask = (e) => {
+    tasks = [
+      ...tasks,
+      {
+        task: e.detail.task,
+        details: e.detail.details,
+        deadline: e.detail.deadline,
+      },
+    ];
+    showHide();
+  };
+
+  const deleteTask = (ce) => {
+    tasks = tasks.filter((task) => task.task !== ce.detail);
+  };
+
+  const markedDone = (ce) => {
+    tasks = tasks.filter((task) => task.task !== ce.detail.task);
+    tasksDone = [...tasksDone, ce.detail];
+  };
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+  <h1>Task management</h1>
+  {#if !showModal}
+    <Button on:click={showHide}>Add new task</Button>
+  {:else}
+    <Form on:cancel={showHide} on:save={addTask} />
+  {/if}
+  <div class="container">
+    <h2>In progress</h2>
+    {#each tasks as task}
+      <Task {...task} on:done={markedDone} on:delete={deleteTask} />
+    {/each}
+  </div>
+  <div class="container">
+    <h2>Done</h2>
+    {#each tasksDone as taskDone}
+      <TaskDone {...taskDone} />
+    {/each}
+  </div>
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+  :global(body) {
+    background-color: #edf0f8;
+    font-family: 'Ubuntu', sans-serif;
+  }
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
+  h1 {
+    font-size: 48px;
+    margin-left: 30px;
+    margin-top: 70px;
+    color: #333;
+    font-weight: 700;
+  }
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+  .container {
+    float: left;
+    width: 30%;
+  }
+
+  h2 {
+    font-size: 48px;
+    margin-left: 30px;
+    margin-top: 70px;
+    color: #333;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
 </style>
