@@ -1,7 +1,8 @@
 <script>
+  export let disabled;
 </script>
 
-<button on:click><slot /></button>
+<button on:click {disabled}><slot /></button>
 
 <style>
   button {
@@ -14,10 +15,15 @@
     font-weight: bold;
     text-transform: uppercase;
     margin-right: 10px;
+    margin-top: 10px;
   }
 
   button:hover {
     background-color: #9ba4f4;
     border: 0;
+  }
+
+  button:disabled {
+    background-color: #9ba4f4;
   }
 </style>

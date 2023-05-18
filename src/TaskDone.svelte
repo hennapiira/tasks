@@ -1,15 +1,21 @@
 <script>
   export let task;
   export let details;
-  export let deadline;
+  export let deadline = {
+    day: 0,
+    month: '',
+  };
 </script>
 
 <div>
   <h1>{task}</h1>
   {details}
-  <p>
-    Deadline was {deadline}
-  </p>
+  {#if deadline.day > 0 && deadline.month !== ''}
+    <p>
+      Deadline was {deadline.day}
+      {deadline.month}
+    </p>
+  {/if}
 </div>
 
 <style>

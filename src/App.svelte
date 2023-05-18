@@ -3,6 +3,7 @@
   import Task from './Task.svelte';
   import Button from './Button.svelte';
   import TaskDone from './TaskDone.svelte';
+  export let app;
 
   let showModal = false;
 
@@ -14,7 +15,10 @@
     {
       task: 'testaile',
       details: 'testaillaan UI:ta svelte sovelluksessa',
-      deadline: 'Nov 26',
+      deadline: {
+        day: 26,
+        month: 'November',
+      },
     },
   ];
   let tasksDone = [];
@@ -42,7 +46,7 @@
 </script>
 
 <main>
-  <h1>Task management</h1>
+  <h1>{app}</h1>
   {#if !showModal}
     <Button on:click={showHide}>Add new task</Button>
   {:else}

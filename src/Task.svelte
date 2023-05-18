@@ -4,15 +4,23 @@
   const dispatch = createEventDispatcher();
   export let task;
   export let details;
-  export let deadline;
+  export let deadline = {
+    day: 0,
+    month: '',
+  };
 </script>
 
 <div>
   <h1>{task}</h1>
-  {details}
-  <p>
-    Deadline {deadline}
-  </p>
+  <p>{details}</p>
+
+  {#if deadline.day > 0 && deadline.month !== ''}
+    <p class="deadline">
+      Deadline {deadline.day}
+      {deadline.month}
+    </p>
+  {/if}
+
   <Button
     on:click={() => {
       dispatch('done', {
@@ -50,6 +58,10 @@
   }
 
   p {
+    font-family: sans-serif;
+  }
+
+  .deadline {
     color: #c4c4c4;
     text-transform: uppercase;
     font-size: 0.8rem;
