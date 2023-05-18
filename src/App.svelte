@@ -3,60 +3,65 @@
   import Task from './Task.svelte';
   import Button from './Button.svelte';
   import TaskDone from './TaskDone.svelte';
+  import allTasks from './taskStore.js';
+
+  // tuodaan sovelluksen nimi propsina main.js tiedostosta
   export let app;
 
   let showModal = false;
 
+  // Funktio, joka määrittelee modalin näkyvyyden
   const showHide = () => {
     showModal = !showModal;
   };
 
-  let tasks = [
-    {
-      task: 'testaile',
-      details: 'testaillaan UI:ta svelte sovelluksessa',
-      deadline: {
-        day: 26,
-        month: 'November',
-      },
-    },
-  ];
   let tasksDone = [];
 
+  // Funktio addTask päivittää taskStorea ja lisää sinne uuden tehtävän
   const addTask = (e) => {
-    tasks = [
+    allTasks.update((tasks) => [
       ...tasks,
       {
         task: e.detail.task,
         details: e.detail.details,
         deadline: e.detail.deadline,
       },
-    ];
+    ]);
     showHide();
   };
 
+  // Funktio deleteTask päivittää taskStorea ja filtteröi ja poistaa tehtävän nimen perusteella
+  // (huono, jos on 2 samannimistä taskia)
   const deleteTask = (ce) => {
-    tasks = tasks.filter((task) => task.task !== ce.detail);
+    allTasks.update((tasks) => {
+      return tasks.filter((task) => task.task !== ce.detail.task);
+    });
   };
 
+  // Funktio markedDone päivittää taskStorea ja filtteröi ja poistaa tehtävän nimen perusteella
+  // ja lisää filtteröidyn tehtävän tasksDone tauluun
   const markedDone = (ce) => {
-    tasks = tasks.filter((task) => task.task !== ce.detail.task);
+    allTasks.update((tasks) => {
+      return tasks.filter((task) => task.task !== ce.detail.task);
+    });
     tasksDone = [...tasksDone, ce.detail];
   };
 </script>
 
 <main>
-  <h1>{app}</h1>
-  {#if !showModal}
-    <Button on:click={showHide}>Add new task</Button>
-  {:else}
-    <Form on:cancel={showHide} on:save={addTask} />
-  {/if}
+  <div class="header">
+    <h1>{app}</h1>
+    {#if !showModal}
+      <div class="addButton">
+        <Button on:click={showHide}>Add new task</Button>
+      </div>
+    {:else}
+      <Form on:cancel={showHide} on:save={addTask} />
+    {/if}
+  </div>
   <div class="container">
     <h2>In progress</h2>
-    {#each tasks as task}
-      <Task {...task} on:done={markedDone} on:delete={deleteTask} />
-    {/each}
+    <Task on:done={markedDone} on:delete={deleteTask} />
   </div>
   <div class="container">
     <h2>Done</h2>
@@ -67,18 +72,22 @@
 </main>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
-  :global(body) {
-    background-color: #edf0f8;
-    font-family: 'Ubuntu', sans-serif;
-  }
-
   h1 {
     font-size: 48px;
     margin-left: 30px;
     margin-top: 70px;
     color: #333;
     font-weight: 700;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+  }
+
+  .addButton {
+    margin-left: 150px;
+    margin-top: 40px;
   }
 
   .container {

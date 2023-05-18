@@ -1,4 +1,5 @@
 <script>
+  import { scale } from 'svelte/transition';
   export let task;
   export let details;
   export let deadline = {
@@ -7,7 +8,7 @@
   };
 </script>
 
-<div>
+<div in:scale>
   <h1>{task}</h1>
   {details}
   {#if deadline.day > 0 && deadline.month !== ''}

@@ -12,7 +12,10 @@
     month: '',
   };
 
+  // Tehdään days-taulukko, joka sisältää 31 alkiota ja määritellään
+  // niiden arvoksi 1-31
   let days = Array.from(Array(31), (_, i) => i + 1);
+
   let months = [
     'January',
     'February',
@@ -28,13 +31,14 @@
     'December',
   ];
 
+  // tarkistetaan onko tehtävä kenttä tyhjä
   $: taskValid = task.trim().length > 0;
 
+  // määritellään virhe-ilmoitus omassa muuttujassa
   let errmsg = 'Field must have value!';
 </script>
 
 <Modal>
-  <div slot="header"><h1>Add new task</h1></div>
   <div>
     <form>
       <TextInput
@@ -45,16 +49,21 @@
         bind:value={task}
       />
       <br />
+
       <h2>Details (optional)</h2>
-      <textarea bind:value={details} />
+      <textarea id="details" bind:value={details} />
       <br />
+
       <h2>Deadline (optional)</h2>
-      <select bind:value={deadline.day}>
+      <label for="day">Day</label>
+      <select id="day" bind:value={deadline.day}>
         {#each days as day}
           <option value={day}>{day}</option>
         {/each}
       </select>
-      <select bind:value={deadline.month}>
+
+      <label for="month">Month</label>
+      <select id="month" bind:value={deadline.month}>
         {#each months as month}
           <option value={month}>{month}</option>
         {/each}

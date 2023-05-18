@@ -1,41 +1,42 @@
 <script>
   import Button from './Button.svelte';
+  import { scale, fly } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
+  import allTasks from './taskStore.js';
   const dispatch = createEventDispatcher();
-  export let task;
-  export let details;
-  export let deadline = {
-    day: 0,
-    month: '',
-  };
+
+  // alustetaan tyhjä taulukko tasks
+  let tasks = [];
+
+  // Päivitetään tasks-taulukon arvoa, mikäli storen arvo päivittyy
+  allTasks.subscribe((value) => {
+    tasks = value;
+  });
 </script>
 
-<div>
-  <h1>{task}</h1>
-  <p>{details}</p>
+{#each tasks as task}
+  <div in:fly={{ y: -100, duration: 400 }} out:scale>
+    <h1>{task.task}</h1>
+    <p>{task.details}</p>
 
-  {#if deadline.day > 0 && deadline.month !== ''}
-    <p class="deadline">
-      Deadline {deadline.day}
-      {deadline.month}
-    </p>
-  {/if}
+    {#if task.deadline.day > 0 && task.deadline.month !== ''}
+      <p class="deadline">
+        Deadline {task.deadline.day}
+        {task.deadline.month}
+      </p>
+    {/if}
 
-  <Button
-    on:click={() => {
-      dispatch('done', {
-        task: task,
-        details: details,
-        deadline: deadline,
-      });
-    }}>Mark as done</Button
-  >
-  <Button
-    on:click={() => {
-      dispatch('delete', task);
-    }}>Delete</Button
-  >
-</div>
+    <Button
+      on:click={() => {
+        dispatch('done', task);
+      }}>Mark as done</Button
+    >
+    <Button
+      on:click={() => {
+        dispatch('delete', task);
+      }}>Delete</Button
+    >
+  </div>{/each}
 
 <style>
   div {
@@ -43,7 +44,6 @@
     padding: 20px;
     border-radius: 30px;
     width: 50%;
-    margin: 20px;
     font-size: 0.85rem;
     text-align: center;
     box-shadow: 0px 0px 10px #6e6d6d;
