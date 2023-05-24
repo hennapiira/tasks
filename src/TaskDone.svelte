@@ -8,6 +8,7 @@
   };
 </script>
 
+<!--in:scale = elementti tulee näkyviin scale transitionilla-->
 <div in:scale>
   <h1>{task}</h1>
   {details}

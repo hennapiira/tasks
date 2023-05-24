@@ -15,22 +15,25 @@
 </script>
 
 {#each tasks as task}
+  <!--in:fly = elementti tulee näkyviin fly transitionilla y-akselin suunnassa ylöspäin (-100 pikseliä) 400 millisekunnissa.
+out:scale = elementti poistuu scale transitionilla-->
   <div in:fly={{ y: -100, duration: 400 }} out:scale>
     <h1>{task.task}</h1>
     <p>{task.details}</p>
-
+    <!--Jos tehtävän deadlinen päivä ja kuukausi arvot eivät ole tyhjiä, vain silloin näytetään deadline-->
     {#if task.deadline.day > 0 && task.deadline.month !== ''}
       <p class="deadline">
         Deadline {task.deadline.day}
         {task.deadline.month}
       </p>
     {/if}
-
+    <!-- "Mark as done" -painike, joka välittää custom eventin 'done' ja kyseisen tehtävän.  -->
     <Button
       on:click={() => {
         dispatch('done', task);
       }}>Mark as done</Button
     >
+    <!-- "Delete" -painike, joka välittää custom eventin 'delete' ja kyseisen tehtävän.  -->
     <Button
       on:click={() => {
         dispatch('delete', task);

@@ -30,7 +30,7 @@
     showHide();
   };
 
-  // Funktio deleteTask päivittää taskStorea ja filtteröi ja poistaa tehtävän nimen perusteella
+  // Funktio deleteTask päivittää taskStorea ja filtteröi ja poistaa tehtävän nimen(task) perusteella
   // (huono, jos on 2 samannimistä taskia)
   const deleteTask = (ce) => {
     allTasks.update((tasks) => {
@@ -38,7 +38,7 @@
     });
   };
 
-  // Funktio markedDone päivittää taskStorea ja filtteröi ja poistaa tehtävän nimen perusteella
+  // Funktio markedDone päivittää taskStorea ja filtteröi ja poistaa tehtävän nimen(task) perusteella
   // ja lisää filtteröidyn tehtävän tasksDone tauluun
   const markedDone = (ce) => {
     allTasks.update((tasks) => {
@@ -50,22 +50,32 @@
 
 <main>
   <div class="header">
+    <!-- Näytetään sovelluksen nimi, joka on välitetty propsina -->
     <h1>{app}</h1>
-    {#if !showModal}
+    <!-- Jos showModal on true, renderöidään lomake (Form) AddTask.svelte komponentista. 
+      Välitetään sille kaksi tapahtumankäsittelijää (cancel ja save) ja määritellään 
+    niihin showHide ja addTask funktiot. -->
+    {#if showModal}
+      <Form on:cancel={showHide} on:save={addTask} />
+      <!-- Jos showModal on false, näytetään "Add new task" -painike -->
+    {:else}
       <div class="addButton">
         <Button on:click={showHide}>Add new task</Button>
       </div>
-    {:else}
-      <Form on:cancel={showHide} on:save={addTask} />
     {/if}
   </div>
   <div class="container">
     <h2>In progress</h2>
+    <!-- Renderöidään tehtävät (Task) Task.svelte komponentista. 
+      Välitetään kaksi tapahtumankäsittelijää (done ja delete) ja määritellään
+      niihin markedDone ja deleteTask funktiot. -->
     <Task on:done={markedDone} on:delete={deleteTask} />
   </div>
   <div class="container">
     <h2>Done</h2>
+    <!-- Toistetaan seuraavaa osiota jokaiselle tasksDone-taulukon alkiolle -->
     {#each tasksDone as taskDone}
+      <!--Renderöidään yksittäinen valmistehtävä (TaskDone) TaskDone.svelte komponentista ja välitetään sille taulukko taskDone-->
       <TaskDone {...taskDone} />
     {/each}
   </div>

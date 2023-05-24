@@ -2,6 +2,7 @@
   export let disabled;
 </script>
 
+<!--Välitetään on:click tapahtuma kun painiketta painetaan-->
 <button on:click {disabled}><slot /></button>
 
 <style>

@@ -72,7 +72,10 @@
   </div>
 
   <div slot="footer" class="footer">
+    <!-- "Go back" -painike, joka välittää custom eventin 'cancel'.  -->
     <Button on:click={() => dispatch('cancel')}>Go back</Button>
+    <!-- "Save" -painike, joka välittää custom eventin 'save'. Se sisältää
+    käyttäjän syöttämät tiedot ja se on disabloitunut, mikäli taskValid on false  -->
     <Button
       on:click={() =>
         dispatch('save', {
