@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-// määritellään tasks niminen store
+// Define a store named tasks
 const tasks = writable([]);
 
 export default tasks;

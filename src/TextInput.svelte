@@ -3,7 +3,7 @@
   export let labelheader;
   export let value;
 
-  //validointiin liittyvät muuttujat
+  // Validation variables
   export let valid;
   export let errmsg;
   export let firstVisit = true;

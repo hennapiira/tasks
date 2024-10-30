@@ -5,19 +5,19 @@
   import TaskDone from './TaskDone.svelte';
   import allTasks from './taskStore.js';
 
-  // tuodaan sovelluksen nimi propsina main.js tiedostosta
+  // Import the application name as a prop from the main.js file
   export let app;
 
   let showModal = false;
 
-  // Funktio, joka määrittelee modalin näkyvyyden
+  // Function that sets the visibility of the modal
   const showHide = () => {
     showModal = !showModal;
   };
 
   let tasksDone = [];
 
-  // Funktio addTask päivittää taskStorea ja lisää sinne uuden tehtävän
+  // The addTask function updates taskStore and adds a new task to it
   const addTask = (e) => {
     allTasks.update((tasks) => [
       ...tasks,
@@ -30,16 +30,16 @@
     showHide();
   };
 
-  // Funktio deleteTask päivittää taskStorea ja filtteröi ja poistaa tehtävän nimen(task) perusteella
-  // (huono, jos on 2 samannimistä taskia)
+  // The deleteTask function updates taskStore by filtering and removing a task based on its name (task)
+  // (not ideal if there are two tasks with the same name)
   const deleteTask = (ce) => {
     allTasks.update((tasks) => {
       return tasks.filter((task) => task.task !== ce.detail.task);
     });
   };
 
-  // Funktio markedDone päivittää taskStorea ja filtteröi ja poistaa tehtävän nimen(task) perusteella
-  // ja lisää filtteröidyn tehtävän tasksDone tauluun
+  // The markedDone function updates taskStore by filtering and removing a task based on its name (task)
+  // and adds the filtered task to the tasksDone array
   const markedDone = (ce) => {
     allTasks.update((tasks) => {
       return tasks.filter((task) => task.task !== ce.detail.task);
@@ -50,14 +50,13 @@
 
 <main>
   <div class="header">
-    <!-- Näytetään sovelluksen nimi, joka on välitetty propsina -->
+    <!-- Display the application name that has been passed as a prop -->
     <h1>{app}</h1>
-    <!-- Jos showModal on true, renderöidään lomake (Form) AddTask.svelte komponentista. 
-      Välitetään sille kaksi tapahtumankäsittelijää (cancel ja save) ja määritellään 
-    niihin showHide ja addTask funktiot. -->
+    <!-- If showModal is true, render the form (Form) from the AddTask.svelte component.
+     Pass it two event handlers (cancel and save) and define the showHide and addTask functions for them. -->
     {#if showModal}
       <Form on:cancel={showHide} on:save={addTask} />
-      <!-- Jos showModal on false, näytetään "Add new task" -painike -->
+      <!-- If showModal is false, display the "Add new task" button -->
     {:else}
       <div class="addButton">
         <Button on:click={showHide}>Add new task</Button>
@@ -66,16 +65,15 @@
   </div>
   <div class="container">
     <h2>In progress</h2>
-    <!-- Renderöidään tehtävät (Task) Task.svelte komponentista. 
-      Välitetään kaksi tapahtumankäsittelijää (done ja delete) ja määritellään
-      niihin markedDone ja deleteTask funktiot. -->
+    <!-- Render the tasks (Task) from the Task.svelte component.
+     Pass two event handlers (done and delete) and define the markedDone and deleteTask functions for them. -->
     <Task on:done={markedDone} on:delete={deleteTask} />
   </div>
   <div class="container">
     <h2>Done</h2>
-    <!-- Toistetaan seuraavaa osiota jokaiselle tasksDone-taulukon alkiolle -->
+    <!-- Repeat the following section for each element in the tasksDone array -->
     {#each tasksDone as taskDone}
-      <!--Renderöidään yksittäinen valmistehtävä (TaskDone) TaskDone.svelte komponentista ja välitetään sille taulukko taskDone-->
+      <!-- Render a single completed task (TaskDone) from the TaskDone.svelte component and pass it the taskDone array -->
       <TaskDone {...taskDone} />
     {/each}
   </div>

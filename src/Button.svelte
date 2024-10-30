@@ -2,7 +2,7 @@
   export let disabled;
 </script>
 
-<!--Välitetään on:click tapahtuma kun painiketta painetaan-->
+<!-- Pass the on:click event when the button is pressed -->
 <button on:click {disabled}><slot /></button>
 
 <style>

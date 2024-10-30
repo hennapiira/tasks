@@ -5,35 +5,35 @@
   import allTasks from './taskStore.js';
   const dispatch = createEventDispatcher();
 
-  // alustetaan tyhjä taulukko tasks
+  // Initialize an empty array tasks
   let tasks = [];
 
-  // Päivitetään tasks-taulukon arvoa, mikäli storen arvo päivittyy
+  // Update the value of the tasks array if the store value changes
   allTasks.subscribe((value) => {
     tasks = value;
   });
 </script>
 
 {#each tasks as task}
-  <!--in:fly = elementti tulee näkyviin fly transitionilla y-akselin suunnassa ylöspäin (-100 pikseliä) 400 millisekunnissa.
-out:scale = elementti poistuu scale transitionilla-->
+  <!-- in:fly = the element appears with a fly transition moving upward on the y-axis (-100 pixels) over 400 milliseconds.
+out:scale = the element exits with a scale transition -->
   <div in:fly={{ y: -100, duration: 400 }} out:scale>
     <h1>{task.task}</h1>
     <p>{task.details}</p>
-    <!--Jos tehtävän deadlinen päivä ja kuukausi arvot eivät ole tyhjiä, vain silloin näytetään deadline-->
+    <!-- The deadline is only displayed if the day and month values of the task's deadline are not empty -->
     {#if task.deadline.day > 0 && task.deadline.month !== ''}
       <p class="deadline">
         Deadline {task.deadline.day}
         {task.deadline.month}
       </p>
     {/if}
-    <!-- "Mark as done" -painike, joka välittää custom eventin 'done' ja kyseisen tehtävän.  -->
+    <!-- "Mark as done" button that dispatches a custom event 'done' along with the corresponding task. -->
     <Button
       on:click={() => {
         dispatch('done', task);
       }}>Mark as done</Button
     >
-    <!-- "Delete" -painike, joka välittää custom eventin 'delete' ja kyseisen tehtävän.  -->
+    <!-- "Delete" button that dispatches a custom event 'delete' along with the corresponding task. -->
     <Button
       on:click={() => {
         dispatch('delete', task);

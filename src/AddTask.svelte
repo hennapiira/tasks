@@ -12,8 +12,7 @@
     month: '',
   };
 
-  // Tehdään days-taulukko, joka sisältää 31 alkiota ja määritellään
-  // niiden arvoksi 1-31
+  // Create an array named "days" containing 31 elements and set their values to 1-31
   let days = Array.from(Array(31), (_, i) => i + 1);
 
   let months = [
@@ -31,10 +30,10 @@
     'December',
   ];
 
-  // tarkistetaan onko tehtävä kenttä tyhjä
+  // Check if the task field is empty
   $: taskValid = task.trim().length > 0;
 
-  // määritellään virhe-ilmoitus omassa muuttujassa
+  // Define the error message in its own variable
   let errmsg = 'Field must have value!';
 </script>
 
@@ -72,10 +71,9 @@
   </div>
 
   <div slot="footer" class="footer">
-    <!-- "Go back" -painike, joka välittää custom eventin 'cancel'.  -->
+    <!-- "Go back" button that dispatches a custom event 'cancel'. -->
     <Button on:click={() => dispatch('cancel')}>Go back</Button>
-    <!-- "Save" -painike, joka välittää custom eventin 'save'. Se sisältää
-    käyttäjän syöttämät tiedot ja se on disabloitunut, mikäli taskValid on false  -->
+    <!-- "Save" button that dispatches a custom event 'save'. It contains user-entered data and is disabled if taskValid is false -->
     <Button
       on:click={() =>
         dispatch('save', {
