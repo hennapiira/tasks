@@ -21,22 +21,30 @@ Follow these steps to set up and run the application locally:
 
 1. Open your terminal and navigate to the project directory where the files are located:
 
-`cd tasks`
+```
+cd tasks
+```
 
 and install the necessary dependencies using npm:
 
-`npm i`
+```
+npm i
+```
 
-2.
+2. - To start **the development server**, run:
 
-- To start **the development server**, run:
-
-`npm run dev`
+```
+npm run dev
+```
 
 - To create **a production build** of the application, run:
 
-`npm run build`
+```
+npm run build
+```
 
 3. Once the development server is running, you can access the application by navigating to:
 
-[http://localhost:8080](http://localhost:8080)
+```
+http://localhost:8080
+```
