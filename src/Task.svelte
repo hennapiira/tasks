@@ -50,6 +50,7 @@ out:scale = the element exits with a scale transition -->
     font-size: 0.85rem;
     text-align: center;
     box-shadow: 0px 0px 10px #6e6d6d;
+    margin-bottom: 30px;
   }
 
   h1 {
