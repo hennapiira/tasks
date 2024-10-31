@@ -31,16 +31,10 @@ and install the necessary dependencies using npm:
 npm i
 ```
 
-2. - To start **the development server**, run:
+2. - To start the development server, run:
 
 ```
 npm run dev
-```
-
-- To create **a production build** of the application, run:
-
-```
-npm run build
 ```
 
 3. Once the development server is running, you can access the application by navigating to:
