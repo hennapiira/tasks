@@ -91,10 +91,7 @@
     margin-top: 30px;
   }
 
-  @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
-
   h2 {
-    font-family: 'Ubuntu', sans-serif;
     font-size: 1.2rem;
     font-weight: 600;
   }

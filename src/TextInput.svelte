@@ -22,10 +22,7 @@
 {/if}
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
-
   label {
-    font-family: 'Ubuntu', sans-serif;
     font-size: 1.2rem;
     font-weight: bold;
   }

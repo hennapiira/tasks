@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../assets/fonts//Ubuntu/Ubuntu-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 body {
   background-color: #edf0f8;
   font-family: 'Ubuntu', sans-serif;
